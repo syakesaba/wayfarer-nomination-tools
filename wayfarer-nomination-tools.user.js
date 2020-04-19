@@ -10,9 +10,10 @@
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
 // @include      https://wayfarer.nianticlabs.com/nominations
 // @match        https://wayfarer.nianticlabs.com/nominations
+// @grant        GM_addStyle
+// @grant        GM_getResourceText
 // @require      https://unpkg.com/tabulator-tables@4.6.2/dist/js/tabulator.min.js
 // @resource     tabulator_css https://unpkg.com/tabulator-tables@4.6.2/dist/css/tabulator.min.css
-// @grant        none
 // ==/UserScript==
 
 /*
@@ -53,7 +54,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     let nominationController = w.angular.element(elm_nc).scope().nomCtrl;
     let nominations = [];
     retributeNominations();
-    appendExportButton();
+    //appendExportButton();
     appendTable();
 
     /*
@@ -125,7 +126,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
                 "state",
                 "day",
                 "order",
-                "imageurl",
+                "imageUrl",
                 "timestamp",
                 "status",
                 "upgraded",
@@ -139,15 +140,56 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     }
 
     function appendTable() {
-        //http://tabulator.info/examples/4.6
         let table_holder = document.createElement("div");
         table_holder.id = "nominations_table";
         let placeholder = document.querySelector('.nomination-header');
-        placeholder.appendChild(table);
+        placeholder.appendChild(table_holder);
         let table = new Tabulator("#nominations_table", {
             height:"311px",
-            index:"order"
+            index:"order",
+            layout:"fitData",
+             columns:[
+                {title:"id",field:"id",width:100},
+                {title:"title",field:"title"},
+                {title:"description",field:"description"},
+                {title:"lat",field:"lat"},
+                {title:"lng",field:"lng"},
+                {title:"city",field:"city"},
+                {title:"state",field:"state"},
+                {title:"day",field:"day"},
+                {title:"order",field:"order"},
+                {title:"imageUrl",field:"imageUrl",width:100},
+//                {title:"timestamp",field:"timestamp"},
+                {title:"status",field:"status"},
+                {title:"upgraded",field:"upgraded"},
+                {title:"nextUpgrade",field:"upgraded"}
+            ],
+            ajaxResponse:function(url, params, response){
+                //url - the URL of the request
+                //params - the parameters passed with the request
+                //response - the JSON object returned in the body of the response.
+                let data = response.result;
+                console.table(data);
+                return data;
+            }
         });
-        table.setData(nominations);
+        var ajaxConfig = {
+            method:"get", //set request type to Position
+            headers: {
+                "Content-type": 'application/json; charset=utf-8', //set specific content type
+            }
+        };
+        table.setData("https://wayfarer.nianticlabs.com/api/v1/vault/manage", {}, ajaxConfig); //make ajax request with advanced config options
+
+        let button = document.createElement('button');
+        button.id = 'exportTableButton';
+        button.type = 'button';
+        button.className = '';
+        button.innerText = 'Export Table';
+        button.addEventListener('click', function(e) {
+            table.download("csv", "nominations.csv");
+        });
+        placeholder.appendChild(button);
     }
+
 })();
