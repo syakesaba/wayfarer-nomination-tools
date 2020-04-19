@@ -53,6 +53,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     }
 
     function getNominations() {
+        //https://github.com/PickleRickVE/wayfarer-direct-export/tree/master
         let nominations = [];
         if (!nominationController.loaded) {
             w.setTimeout(getNominations, 200);
@@ -74,8 +75,24 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
                 "submitteddate": item.day,
                 "imageurl": item.imageUrl
             };
+            alert(nomination);
             nominations.push(nomination);
             return nominations;
         });
+    }
+    function appendExportButton(nominations) {
+        //https://blog.foresta.me/posts/extract_devices_with_user_script/
+        let button = document.createElement('button');
+        button.id = 'exportNominationButton';
+        button.type = 'button';
+        button.className = '';
+        button.innerText = 'Export Nomination';
+        let placeholder = document.querySelector('.nomination-header');
+        placeholder.appendChild(button);
+
+        //onclick
+        button.addEventListener('click', function(e) {
+            w.alert(nominations);
+        }
     }
 })();
