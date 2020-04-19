@@ -41,9 +41,9 @@ SOFTWARE.
 const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
 
 /* globals variables */
-let sidebarController;
-let nominationController;
-let nominations = [];
+const sidebarController;
+const nominationController;
+const nominations = [];
 
 (function() {
     "use strict";
