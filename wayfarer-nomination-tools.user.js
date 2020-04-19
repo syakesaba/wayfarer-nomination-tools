@@ -4,7 +4,7 @@
 // @category     Info
 // @namespace    syakesaba
 // @author       https://github.com/syakesaba/wayfarer-nomination-tools
-// @version      0.22
+// @version      0.3
 // @updateURL    https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @downloadURL  https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
@@ -49,13 +49,54 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
 
 (function() {
     "use strict";
+    const STATES = {init: 0, details: 1, edit: 2, error: 3};
     // NominationController
     let elm_nc = w.document.querySelector(".nominations-controller");
     let nominationController = w.angular.element(elm_nc).scope().nomCtrl;
-    //let nominations = [];
-    //retributeNominations();
+    let nominations = [];
+    let selectedNomination = undefined;
     //appendExportButton();
+    //retributeNominations();
     appendExportCSVButton();
+    appendStreetviewLink();
+    hookNominationLoaded();
+
+    function appendStreetviewLink() {
+        let a = document.createElement("a");
+        a.id = 'sview';
+        a.href = "";
+        a.target = "_blank"
+        a.innerText = "ストリートビューを開く";
+        a.className = 'button-primary';
+        let placeholder = document.querySelector('.nomination-detail');
+        placeholder.appendChild(a);
+    }
+
+    function onNominationLoaded() {
+        hookCurrentNominationChange();
+    }
+
+    function onCurrentNominationChange() {
+        let sview = document.querySelector('#sview');
+        sview.href = "https://www.google.com/maps/@?api=1&map_action=pano&parameters&viewpoint=" + selectedNomination.lat + "," + selectedNomination.lng;
+    }
+
+    function hookNominationLoaded() {
+        if (!nominationController.loaded) {
+            w.setTimeout(hookCurrentNominationChange, 200);
+        }
+        onNominationLoaded();
+    }
+
+    function hookCurrentNominationChange() {
+        if (nominationController.currentNomination != undefined){
+            if (selectedNomination != nominationController.currentNomination){
+                selectedNomination = nominationController.currentNomination;
+                onCurrentNominationChange();
+            }
+        }
+        w.setTimeout(hookCurrentNominationChange, 1000);
+    }
 
 /*
     function retributeNominations() {
@@ -87,6 +128,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
         });
     }
 */
+
 /*
     function appendExportButton() {
         //https://blog.foresta.me/posts/extract_devices_with_user_script/
@@ -160,7 +202,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
                 //params - the parameters passed with the request
                 //response - the JSON object returned in the body of the response.
                 let data = response.result;
-                console.table(data);
+//                console.table(data);
                 return data;
             }
         });
