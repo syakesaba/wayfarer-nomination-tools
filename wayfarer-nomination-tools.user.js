@@ -50,6 +50,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     let nominationController = w.angular.element(elm_nc).scope().nomCtrl;
     if (nominationController !== null) {
         let nominations = getNominations();
+        appendExportButton(nominations);
     }
 
     function getNominations() {
@@ -80,6 +81,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
             return nominations;
         });
     }
+
     function appendExportButton(nominations) {
         //https://blog.foresta.me/posts/extract_devices_with_user_script/
         let button = document.createElement('button');
