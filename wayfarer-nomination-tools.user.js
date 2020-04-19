@@ -149,20 +149,20 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
             index:"order",
             layout:"fitData",
              columns:[
-                {title:"id",field:"id",width:100},
-                {title:"title",field:"title"},
-                {title:"description",field:"description"},
-                {title:"lat",field:"lat"},
-                {title:"lng",field:"lng"},
-                {title:"city",field:"city"},
-                {title:"state",field:"state"},
-                {title:"day",field:"day"},
-                {title:"order",field:"order"},
-                {title:"imageUrl",field:"imageUrl",width:100},
+                {title:"ID",field:"id",width:100},
+                {title:"タイトル",field:"title"},
+                {title:"説明",field:"description"},
+                {title:"緯度",field:"lat"},
+                {title:"経度",field:"lng"},
+                {title:"市",field:"city"},
+                {title:"州",field:"state"},
+                {title:"申請日",field:"day"},
+                {title:"番号",field:"order"},
+                {title:"画像URL",field:"imageUrl",width:100},
 //                {title:"timestamp",field:"timestamp"},
-                {title:"status",field:"status"},
-                {title:"upgraded",field:"upgraded"},
-                {title:"nextUpgrade",field:"upgraded"}
+                {title:"状態",field:"status"},
+                {title:"アプグレ済フラグ",field:"upgraded"},
+                {title:"次回アプグレフラグ",field:"upgraded"}
             ],
             ajaxResponse:function(url, params, response){
                 //url - the URL of the request
