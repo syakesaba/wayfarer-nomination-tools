@@ -4,7 +4,7 @@
 // @category     Info
 // @namespace    syakesaba
 // @author       https://github.com/syakesaba/wayfarer-nomination-tools
-// @version      0.0003
+// @version      0.0004
 // @updateURL    https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @downloadURL  https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
@@ -41,9 +41,9 @@ SOFTWARE.
 const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
 
 /* globals variables */
-const sidebarController;
-const nominationController;
-const nominations = [];
+let sidebarController;
+let nominationController;
+let nominations = [];
 
 (function() {
     "use strict";
