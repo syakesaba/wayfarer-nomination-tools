@@ -4,7 +4,7 @@
 // @category     Info
 // @namespace    syakesaba
 // @author       https://github.com/syakesaba/wayfarer-nomination-tools
-// @version      0.0001
+// @version      0.0002
 // @updateURL    https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.meta.js
 // @downloadURL  https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
