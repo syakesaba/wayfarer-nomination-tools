@@ -4,14 +4,13 @@
 // @category     Info
 // @namespace    syakesaba
 // @author       https://github.com/syakesaba/wayfarer-nomination-tools
-// @version      0.0005
+// @version      0.0006
 // @updateURL    https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @downloadURL  https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
 // @include      https://wayfarer.nianticlabs.com/nominations
 // @match        https://wayfarer.nianticlabs.com/nominations
 // @grant        none
-
 // ==/UserScript==
 
 /*
@@ -40,38 +39,27 @@ SOFTWARE.
 /* globals unsafeWindow */
 const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
 
-/* globals variables */
-let sidebarController;
-let nominationController;
-let nominations = [];
-
 (function() {
     "use strict";
-    // SidebarController as sidebar
-    let elm_sd = w.document.querySelector(".sidebar");
-    if (!elm_sd) {
-        //console.log("");
-        return;
-    }
-    sidebarController = w.angular.element(elm_sd).scope().sidebar;
-
     // NominationController
     let elm_nc = w.document.querySelector(".nominations-controller");
     if (!elm_nc) {
         //console.log("");
         return;
     }
-    nominationController = w.angular.element(elm_nc).scope().nomCtrl;
+    let nominationController = w.angular.element(elm_nc).scope().nomCtrl;
     if (nominationController !== null) {
-        analyzeCandidates();
+        let nominations = getNominations();
     }
-    function analyzeCandidates() {
+
+    function getNominations() {
+        let nominations = [];
         if (!nominationController.loaded) {
-            w.setTimeout(analyzeCandidates, 200);
+            w.setTimeout(getNominations, 200);
             return;
         }
         let timestamp = Date.now();
-        nomList = nominationController.nomList;
+        let nomList = nominationController.nomList;
         nomList.forEach(function(item) {
             let nomination = {
                 "id": item.id,
@@ -87,7 +75,7 @@ let nominations = [];
                 "imageurl": item.imageUrl
             };
             nominations.push(nomination);
+            return nominations;
         });
     }
 })();
-
