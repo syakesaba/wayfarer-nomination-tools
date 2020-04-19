@@ -4,7 +4,7 @@
 // @category     Info
 // @namespace    syakesaba
 // @author       https://github.com/syakesaba/wayfarer-nomination-tools
-// @version      0.0010
+// @version      0.0011
 // @updateURL    https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @downloadURL  https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
@@ -48,6 +48,21 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     retributeNominations();
     appendExportButton(nominations);
 
+    /*
+    id: "AwIEUgcEBlIFV1NQBAABUQFVVQQGDg1ZUwcEVlVSB11LBwcH"
+    title: "天神橋筋商店街 天五 タイルアート"
+    description: "天神橋筋五丁目のアーケード街にあるタイルアート"
+    lat: 34.707639
+    lng: 135.511304
+    city: "Osaka"
+    state: "Osaka"
+    day: "2020-04-19"
+    order: 277
+    imageUrl: "https://lh3.googleusercontent.com/aBlZvLZTd6qDPAd5vJweCg-raJzsEmROI5Bl_Ffyn-ibbQzbkjjLF9_voIOD1867UDmckDpScHlHxXXiKgLwPXph5jWd"
+    nextUpgrade: false
+    upgraded: false
+    status: "NOMINATED"
+    */
     function retributeNominations() {
         //https://github.com/PickleRickVE/wayfarer-direct-export/tree/master
         if (!nominationController.loaded) {
@@ -59,18 +74,20 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
         nomList.forEach(function(item) {
             let nomination = {
                 "id": item.id,
-                "timestamp": timestamp,
-                "status": item.status,
-                "nickname": "player",
-                "responsedate": "null",
-                "lat": item.lat,
-                "lng": item.lng,
                 "title": item.title,
                 "description": item.description,
-                "submitteddate": item.day,
+                "lat": item.lat,
+                "lng": item.lng,
+                "city": item.city,
+                "state": item.state,
+                "day": item.day,
+                "order": item.order,
                 "imageurl": item.imageUrl
+                "timestamp": timestamp,
+                "status": item.status,
+                "upgraded": item.upgraded,
+                "nextUpgrade": item.nextUpgrade
             };
-            console.table(item;)
             nominations.push(nomination);
         });
     }
@@ -91,12 +108,23 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
             const items = nominations;
             const replacer = (key, value) => value === null ? '' : value;
             const header = [
-                "id","timestamp","status","nickname",
-                "responsedate","lat","lng","title",
-                "description","submitteddate","imageurl"
+                "id",
+                "title",
+                "description",
+                "lat",
+                "lng",
+                "city",
+                "state",
+                "day",
+                "order",
+                "imageurl",
+                "timestamp",
+                "status",
+                "upgraded",
+                "nextUpgrade"
             ];
             let csv = items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-            csv.unshift(header.join(','))
+            csv.unshift(header.join(','));
             csv = csv.join('\r\n');
             document.write(csv);
         });
