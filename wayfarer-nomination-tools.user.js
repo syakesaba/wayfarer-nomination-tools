@@ -82,7 +82,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
                 "state": item.state,
                 "day": item.day,
                 "order": item.order,
-                "imageurl": item.imageUrl
+                "imageurl": item.imageUrl,
                 "timestamp": timestamp,
                 "status": item.status,
                 "upgraded": item.upgraded,
