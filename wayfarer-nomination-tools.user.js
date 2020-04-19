@@ -10,6 +10,8 @@
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
 // @include      https://wayfarer.nianticlabs.com/nominations
 // @match        https://wayfarer.nianticlabs.com/nominations
+// @require      https://unpkg.com/tabulator-tables@4.6.2/dist/js/tabulator.min.js
+// @resource     tabulator_css https://unpkg.com/tabulator-tables@4.6.2/dist/css/tabulator.min.css
 // @grant        none
 // ==/UserScript==
 
@@ -36,6 +38,11 @@ SOFTWARE.
 
 */
 
+//https://github.com/olifolkerd/tabulator
+//https://wiki.greasespot.net/Third-Party_Libraries
+var tabulator_css = GM_getResourceText("tabulator_css");
+GM_addStyle(tabulator_css);
+
 /* globals unsafeWindow */
 const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
 
@@ -46,7 +53,8 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     let nominationController = w.angular.element(elm_nc).scope().nomCtrl;
     let nominations = [];
     retributeNominations();
-    appendExportButton(nominations);
+    appendExportButton();
+    appendTable();
 
     /*
     id: "AwIEUgcEBlIFV1NQBAABUQFVVQQGDg1ZUwcEVlVSB11LBwcH"
@@ -128,5 +136,18 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
             csv = csv.join('\r\n');
             document.write(csv);
         });
+    }
+
+    function appendTable() {
+        //http://tabulator.info/examples/4.6
+        let table_holder = document.createElement("div");
+        table_holder.id = "nominations_table";
+        let placeholder = document.querySelector('.nomination-header');
+        placeholder.appendChild(table);
+        let table = new Tabulator("#nominations_table", {
+            height:"311px",
+            index:"order"
+        });
+        table.setData(nominations);
     }
 })();
