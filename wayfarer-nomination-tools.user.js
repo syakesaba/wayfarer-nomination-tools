@@ -76,7 +76,6 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
                 "submitteddate": item.day,
                 "imageurl": item.imageUrl
             };
-            alert(nomination);
             nominations.push(nomination);
             return nominations;
         });
@@ -94,7 +93,18 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
 
         //onclick
         button.addEventListener('click', function(e) {
-            w.alert(nominations);
+            //https://stackoverflow.com/questions/8847766/how-to-convert-json-to-csv-format-and-store-in-a-variable
+            const items = nominations
+            const replacer = (key, value) => value === null ? '' : value
+            const header = [
+                "id","timestamp","status","nickname",
+                "responsedate","lat","lng","title",
+                "description","submitteddate","imageurl"
+            ]
+            let csv = items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+            csv.unshift(header.join(','))
+            csv = csv.join('\r\n')
+            console.log(csv)
         }
     }
 })();
