@@ -101,6 +101,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
         });
     }
 
+/*
     function appendExportButton() {
         //https://blog.foresta.me/posts/extract_devices_with_user_script/
         let button = document.createElement('button');
@@ -138,12 +139,12 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
             document.write(csv);
         });
     }
-
+*/
     function appendTable() {
         let table_holder = document.createElement("div");
         table_holder.id = "nominations_table";
         let placeholder = document.querySelector('.nomination-header');
-        placeholder.appendChild(table_holder);
+        //placeholder.appendChild(table_holder);
         let table = new Tabulator("#nominations_table", {
             height:"311px",
             index:"order",
