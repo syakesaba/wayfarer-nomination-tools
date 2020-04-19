@@ -143,7 +143,6 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     function appendTable() {
         let table_holder = document.createElement("div");
         table_holder.id = "nominations_table";
-        table_holder.style.visibility = 'hidden';
         let placeholder = document.querySelector('.nomination-header');
         placeholder.appendChild(table_holder);
         let table = new Tabulator("#nominations_table", {
