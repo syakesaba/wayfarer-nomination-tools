@@ -52,26 +52,12 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     // NominationController
     let elm_nc = w.document.querySelector(".nominations-controller");
     let nominationController = w.angular.element(elm_nc).scope().nomCtrl;
-    let nominations = [];
-    retributeNominations();
+    //let nominations = [];
+    //retributeNominations();
     //appendExportButton();
-    appendTable();
+    appendExportCSVButton();
 
-    /*
-    id: "AwIEUgcEBlIFV1NQBAABUQFVVQQGDg1ZUwcEVlVSB11LBwcH"
-    title: "天神橋筋商店街 天五 タイルアート"
-    description: "天神橋筋五丁目のアーケード街にあるタイルアート"
-    lat: 34.707639
-    lng: 135.511304
-    city: "Osaka"
-    state: "Osaka"
-    day: "2020-04-19"
-    order: 277
-    imageUrl: "https://lh3.googleusercontent.com/aBlZvLZTd6qDPAd5vJweCg-raJzsEmROI5Bl_Ffyn-ibbQzbkjjLF9_voIOD1867UDmckDpScHlHxXXiKgLwPXph5jWd"
-    nextUpgrade: false
-    upgraded: false
-    status: "NOMINATED"
-    */
+/*
     function retributeNominations() {
         //https://github.com/PickleRickVE/wayfarer-direct-export/tree/master
         if (!nominationController.loaded) {
@@ -100,7 +86,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
             nominations.push(nomination);
         });
     }
-
+*/
 /*
     function appendExportButton() {
         //https://blog.foresta.me/posts/extract_devices_with_user_script/
@@ -140,11 +126,13 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
         });
     }
 */
-    function appendTable() {
+    function appendExportCSVButton() {
         let table_holder = document.createElement("div");
         table_holder.id = "nominations_table";
+        //データのデバッグ用テーブル。隠しちゃおう。
         table_holder.style.visibility = "hidden";
         table_holder.style.display = "none";
+        //
         let placeholder = document.querySelector('.nomination-header');
         placeholder.appendChild(table_holder);
         let table = new Tabulator("#nominations_table", {
@@ -187,8 +175,8 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
         let button = document.createElement('button');
         button.id = 'exportTableButton';
         button.type = 'button';
-        button.className = '';
-        button.innerText = 'Export Table';
+        button.className = 'button-primary';
+        button.innerText = 'CSVでエクスポート';
         button.addEventListener('click', function(e) {
             table.download("csv", "nominations.csv");
         });
@@ -196,3 +184,4 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
     }
 
 })();
+
