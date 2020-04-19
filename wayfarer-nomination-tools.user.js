@@ -4,7 +4,7 @@
 // @category     Info
 // @namespace    syakesaba
 // @author       https://github.com/syakesaba/wayfarer-nomination-tools
-// @version      0.0002
+// @version      0.0003
 // @updateURL    https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.meta.js
 // @downloadURL  https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
@@ -48,20 +48,20 @@ const nominations = [];
 (function() {
     "use strict";
     // SidebarController as sidebar
-    let el = w.document.querySelector(".sidebar");
-    if (!el) {
+    let elm_sd = w.document.querySelector(".sidebar");
+    if (!elm_sd) {
         //console.log("");
         return;
     }
-    sidebarController = w.angular.element(el).scope().sidebar;
+    sidebarController = w.angular.element(elm_sd).scope().sidebar;
 
     // NominationController
-    let el = w.document.querySelector(".nominations-controller");
-    if (!el) {
+    let elm_nc = w.document.querySelector(".nominations-controller");
+    if (!elm_nc) {
         //console.log("");
         return;
     }
-    nominationController = w.angular.element(el).scope().nomCtrl;
+    nominationController = w.angular.element(elm_nc).scope().nomCtrl;
     if (nominationController !== null) {
         analyzeCandidates();
     }
