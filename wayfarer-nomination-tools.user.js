@@ -4,7 +4,7 @@
 // @category     Info
 // @namespace    syakesaba
 // @author       https://github.com/syakesaba/wayfarer-nomination-tools
-// @version      0.21
+// @version      0.22
 // @updateURL    https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @downloadURL  https://github.com/syakesaba/wayfarer-nomination-tools/wayfarer-nomination-tools.user.js
 // @description  https://github.com/syakesaba/wayfarer-nomination-tools/README
@@ -144,6 +144,7 @@ const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
         let table_holder = document.createElement("div");
         table_holder.id = "nominations_table";
         table_holder.style.visibility = "hidden";
+        table_holder.style.display = "none";
         let placeholder = document.querySelector('.nomination-header');
         placeholder.appendChild(table_holder);
         let table = new Tabulator("#nominations_table", {
