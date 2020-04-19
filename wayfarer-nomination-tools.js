@@ -14,19 +14,27 @@
 // ==/UserScript==
 
 /* globals unsafeWindow */
-const w = typeof unsafeWindow === 'undefined' ? window : unsafeWindow;
+const w = typeof unsafeWindow === "undefined" ? window : unsafeWindow;
 
+/* globals variables */
+let sidebarController;
 let nominationController;
 let nominations = [];
 
 (function() {
-    'use strict';
-    //
+    "use strict";
+    // SidebarController as sidebar
+    let el = w.document.querySelector(".sidebar");
+    if (!el) {
+        //console.log("");
+        return;
+    }
+    sidebarController = w.angular.element(el).scope().sidebar;
 
     // NominationController
-    let el = w.document.querySelector('.nominations-controller');
+    let el = w.document.querySelector(".nominations-controller");
     if (!el) {
-        //console.log('not in nominations');
+        //console.log("");
         return;
     }
     nominationController = w.angular.element(el).scope().nomCtrl;
@@ -42,17 +50,17 @@ let nominations = [];
         nomList = nominationController.nomList;
         nomList.forEach(function(item) {
             let nomination = {
-                'id': item.id,
-                'timestamp': timestamp,
-                'status': item.status,
-                'nickname': 'player',
-                'responsedate': 'null',
-                'lat': item.lat,
-                'lng': item.lng,
-                'title': item.title,
-                'description': item.description,
-                'submitteddate': item.day,
-                'imageurl': item.imageUrl
+                "id": item.id,
+                "timestamp": timestamp,
+                "status": item.status,
+                "nickname": "player",
+                "responsedate": "null",
+                "lat": item.lat,
+                "lng": item.lng,
+                "title": item.title,
+                "description": item.description,
+                "submitteddate": item.day,
+                "imageurl": item.imageUrl
             };
             nominations.push(nomination);
         });
